@@ -1,0 +1,106 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use work.EE232.all;
+
+entity TONE_GEN is -- Entity declaration
+port(CLK : in std_logic; -- Clock input of tone generator
+RSTN : in std_logic; -- Active low reset input of the circuit
+TONE_OUT: out std_logic); -- Output of tone generator
+end TONE_GEN;
+
+architecture func og TONE_GEN is
+
+TYPE ARR_TYPE_OCTAVE is array(0 to 7) of integer range(0 to 7);
+TYPE ARR_TYPE_MARY is array(0 to 25) of integer range(0 to 7);
+
+signal SA, RE, GA, MA, PA ,DHA, NI, SA1 : std_logic :='0';
+signal CNT_SA: integer range 0 to 95555 :='0';signal CNT_SA: integer range 0 to 95555 :='0';
+signal CNT_RE: integer range 0 to 85132 :='0';
+signal CNT_GA: integer range 0 to 75843 :='0';
+signal CNT_MA: integer range 0 to 71586 :='0';
+signal CNT_PA: integer range 0 to 63776 :='0';
+signal CNT_DHA: integer range 0 to 56818 :='0';
+signal CNT_NI: integer range 0 to 50620 :='0';
+signal CNT_SA1: integer range 0 to 47778 :='0';
+signal CNT_TONE: integer range 0 to 25000000 :='0';
+signal CNT_MASTER : integer range 0 to 25 := '0';
+
+constant OCTAVE : ARR_TYPE_OCTAVE := (0, 1, 2, 3, 4, 5, 6, 7);
+constant MARY : ARR_TYPE_MARY := (2, 1, 0, 1, 2, 2, 2, 1, 1, 1, 2, 4, 4, 2, 1, 0, 1, 2, 2, 2, 2, 1, 1)
+
+begin
+
+process(CLK)
+begin
+if RSTN = '0' then
+CNT_SA <= 0; CNT_RE <= 0; CNT_GA <= 0; CNT_MA <= 0; CNT_PA <= 0; CNT_DHA <= 0; CNT_NI <= 0; CNT_SA <= 0; CNT_TONE <= 0; CNT_MASTER <= 0;
+elsif (CLK'event and CLK = '1') then
+if (CNT_SA = 95555) then
+CNT_SA <= 0;
+SA <= not SA;
+else
+CNT_SA <= CNT_SA + 1;
+end if;
+
+if (CNT_RE = 85132) then
+CNT_RE <= 0;
+RE <= not RE;
+else
+CNT_RE <= CNT_RE + 1;
+end if;
+
+if (CNT_GA = 75843) then
+CNT_GA <= 0;
+GA <= not GA;
+else
+CNT_GA <= CNT_GA + 1;
+end if;
+
+if (CNT_MA = 71586) then
+CNT_MA <= 0;
+MA <= not MA;
+else
+CNT_MA <= CNT_MA + 1;
+end if;
+
+if (CNT_PA = 63776) then
+CNT_PA <= 0;
+PA <= not PA;
+else
+CNT_PA <= CNT_PA + 1;
+end if;
+
+if (CNT_DHA = 56818) then
+CNT_DHA <= 0;
+DHA <= not DHA;
+else
+CNT_DHA <= CNT_DHA + 1;
+end if;
+
+if (CNT_NI = 50620) then
+CNT_NI <= 0;
+NI <= not NI;
+else
+CNT_NI <= CNT_NI + 1;
+end if;
+
+if (CNT_SA1 = 47778) then
+CNT_SA1 <= 0;
+SA1 <= not SA1;
+else
+CNT_SA1 <= CNT_SA1 + 1;
+end if;
+
+if (CNT_TONE = 25000000) then
+CNT_TONE <= 0;
+TONE <= not TONE;
+else
+CNT_TONE <= CNT_TONE + 1;
+end if;
+
+if (CNT_MASTER = 25) then
+CNT_MASTER <= 0;
+MASTER <= not MASTER;
+else
+CNT_MASTER <= CNT_MASTER + 1;
+end if;
